@@ -1,0 +1,41 @@
+name: CI Workflow on Self-Hosted Runner
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+# Jobs
+jobs:
+  build:
+    # Specify a self-hosted runner with a label (e.g., 'self-hosted' or a custom label like 'iiht-devops')
+    runs-on: [self-hosted, iiht-devops]
+
+    # Steps in the job
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Set up Node.js (if you are running a Node.js project)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # 3. Install dependencies (Example for Node.js project)
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Run tests (Example for Node.js project)
+      - name: Run tests
+        run: npm test
+
+      # 5. Run a custom script (replace with any script or task you need)
+      - name: Run custom script
+        run: |
+          echo "Running custom script on self-hosted runner"
+          # Add your custom commands or scripts here
